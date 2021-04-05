@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include "particoes.h"
+#include "manipulacao_arquivos.h"
 
 void classificacao_interna(FILE *arq, Lista *nome_arquivos_saida, int M, int nFunc) {
     rewind(arq); //posiciona cursor no inicio do arquivo
@@ -16,7 +17,7 @@ void classificacao_interna(FILE *arq, Lista *nome_arquivos_saida, int M, int nFu
         while (!feof(arq)) {
             fseek(arq, (reg) * tamanho_registro(), SEEK_SET);
             v[i] = le_funcionario(arq);
-       //     imprime_funcionario(v[i]);
+        //     imprime_funcionario(v[i]);
             i++;
             reg++;
             if(i>=M) break;
@@ -64,7 +65,7 @@ void selecao_natural(FILE *arq, Lista *nome_arquivos_saida, int M, int nFunc, in
     TFunc** v = malloc(M * sizeof(TFunc*));
     int noVetor = 0;
 
-    FILE* repositorio = fopen("repository.dat", "w+");
+    FILE* repositorio = fopen("repositorio.dat", "w+");
     int noRepositorio = 0;
 
     Lista* nomeAtual = nomes;
@@ -96,7 +97,9 @@ void selecao_natural(FILE *arq, Lista *nome_arquivos_saida, int M, int nFunc, in
             continue;
         }
         fseek(particaoAtual, naParticaoAtual * tamanho_registro(), SEEK_SET);
+
         salva_funcionario(v[menor], particaoAtual);
+
 
         naParticaoAtual++;
 
@@ -141,12 +144,14 @@ void selecao_natural(FILE *arq, Lista *nome_arquivos_saida, int M, int nFunc, in
 
         int* ultimoSalvo = NULL;
         int i = 0;
+
+
         while(noVetor > 0)
         {
             fseek(particaoAtual, i * tamanho_registro(), SEEK_SET);
             int lower = buscarMenor(v, noVetor);
             salva_funcionario(v[lower], particaoAtual);
-            imprime_funcionario(v[i]);
+
 
             for (int i = lower; i < noVetor - 1; i++) {
                 v[i] = v[i + 1];
@@ -162,6 +167,7 @@ void selecao_natural(FILE *arq, Lista *nome_arquivos_saida, int M, int nFunc, in
         {
             fseek(repositorio, i * tamanho_registro(), SEEK_SET);
             v[i] = le_funcionario(repositorio);
+
             noVetor++;
         }
         noRepositorio = 0;
@@ -170,7 +176,6 @@ void selecao_natural(FILE *arq, Lista *nome_arquivos_saida, int M, int nFunc, in
         particaoAtual = NULL;
         naParticaoAtual = 0;
 
-
     }
 
     if(particaoAtual) {
@@ -178,6 +183,7 @@ void selecao_natural(FILE *arq, Lista *nome_arquivos_saida, int M, int nFunc, in
         particaoAtual = NULL;
         naParticaoAtual = 0;
     }
+
     int ultimaParticao = 0;
     if(!(noVetor <= 0 && noRepositorio <= 0)) {
 
@@ -192,7 +198,6 @@ void selecao_natural(FILE *arq, Lista *nome_arquivos_saida, int M, int nFunc, in
                 TFunc* func = le_funcionario(repositorio);
                 fseek(particaoAtual, naParticaoAtual * tamanho_registro(), SEEK_SET);
                 salva_funcionario(func, particaoAtual);
-                imprime_funcionario(v[i]);
                 naParticaoAtual++;
             }
             fclose(particaoAtual);
@@ -210,11 +215,12 @@ void selecao_natural(FILE *arq, Lista *nome_arquivos_saida, int M, int nFunc, in
             {
                 fseek(particaoAtual, i * tamanho_registro(), SEEK_SET);
                 salva_funcionario(v[i], particaoAtual);
-                imprime_funcionario(v[i]);
+
                 naParticaoAtual++;
             }
             fclose(particaoAtual);
         }
+
     }
     fclose(repositorio);
     free(v);
@@ -255,5 +261,82 @@ int buscarMenor(TFunc* v[], int tam) {
     }
     return menor;
 }
+
+void imprimeSelecaoNatural(){
+
+    FILE *arq;
+    int x;
+    for(int i=1;i<11;i++){
+        switch(i){
+            case 1:
+                    printf("\np%d.dat:\n",i);
+                    arq = fopen("p1.dat","rb+");
+                    x = tamanho_arquivo(arq);
+                    imprime_base_dados_funcionarios(arq,x+1);
+                    fclose(arq);
+                    break;
+            case 2: printf("\np%d.dat:\n",i);
+                    arq = fopen("p2.dat","rb+");
+                    x = tamanho_arquivo(arq);
+                    imprime_base_dados_funcionarios(arq,x+1);
+                    fclose(arq);
+                    break;
+            case 3:printf("\np%d.dat:\n",i);
+                    arq = fopen("p3.dat","rb+");
+                    x = tamanho_arquivo(arq);
+                    imprime_base_dados_funcionarios(arq,x+1);
+                    fclose(arq);
+                    break;
+            case 4: printf("\np%d.dat:\n",i);
+                    arq = fopen("p4.dat","rb+");
+                    x = tamanho_arquivo(arq);
+                    imprime_base_dados_funcionarios(arq,x+1);
+                    fclose(arq);
+                    break;
+            case 5: printf("\np%d.dat:\n",i);
+                    arq = fopen("p5.dat","rb+");
+                    x = tamanho_arquivo(arq);
+                    imprime_base_dados_funcionarios(arq,x+1);
+                    fclose(arq);
+                    break;
+            case 6: printf("\np%d.dat:\n",i);
+                    arq = fopen("p6.dat","rb+");
+                    x = tamanho_arquivo(arq);
+                    imprime_base_dados_funcionarios(arq,x+1);
+                    fclose(arq);
+                    break;
+            case 7: printf("\np%d.dat:\n",i);
+                    arq = fopen("p7.dat","rb+");
+                    x = tamanho_arquivo(arq);
+                    imprime_base_dados_funcionarios(arq,x+1);
+                    fclose(arq);
+                    break;
+            case 8: printf("\np%d.dat:\n",i);
+                    arq = fopen("p8.dat","rb+");
+                    x = tamanho_arquivo(arq);
+                    imprime_base_dados_funcionarios(arq,x+1);
+                    fclose(arq);
+                    break;
+            case 9: printf("\np%d.dat:\n",i);
+                    arq = fopen("p9.dat","rb+");
+                    x = tamanho_arquivo(arq);
+                    imprime_base_dados_funcionarios(arq,x+1);
+                    fclose(arq);
+                    break;
+            case 10: printf("\np%d.dat:\n",i);
+                     arq = fopen("p10.dat","rb+");
+                     x = tamanho_arquivo(arq);
+                     imprime_base_dados_funcionarios(arq,2);
+
+                     printf("\n-------------------------------INTENS NO REPOSITORIO-----------------------------------\n\n");
+                     arq = fopen("repositorio.dat","rb+");
+                     imprime_base_dados_funcionarios(arq,2);
+                     fclose(arq);
+
+                    break;
+        }
+    }
+}
+
 
 

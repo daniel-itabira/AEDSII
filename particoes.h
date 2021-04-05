@@ -16,5 +16,15 @@ o númer de elementos M a ser armazenado em cada partição e o número de regis
 Fiquem a vontade para modificar a estrutura, foi uma sugestão.*/
 void selecao_natural(FILE *arq, Lista *nome_arquivos_saida, int M, int nFunc, int n);
 
+TFunc* recuperaFuncionario(FILE* arq, int* totalLidos);
 
+void atualizaNomeNaParticao(Lista* nomes, int* numeroNomes);
+
+int possoLerMais(int totalLidos, int nFunc);
+
+FILE* abrirParticao(char* nome);
+
+int buscarMenor(TFunc* v[], int tam);
+
+void imprimeSelecaoNatural();
 #endif
